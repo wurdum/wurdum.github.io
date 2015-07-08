@@ -5,10 +5,19 @@
     <lastmod>2015-07-07T15:34:44+03:00</lastmod>
   </url>
   <url>
+    <loc>http://wurdum.github.io/</loc>
+  </url>
+  <url>
     <loc>http://wurdum.github.io/blog/archives/</loc>
   </url>
   <url>
-    <loc>http://wurdum.github.io/</loc>
+    <loc>http://wurdum.github.io/archives/</loc>
+  </url>
+  <url>
+    <loc>http://wurdum.github.io/blog/</loc>
+  </url>
+  <url>
+    <loc>http://wurdum.github.io/blog/categories/</loc>
   </url>
   <url>
     <loc>http://wurdum.github.io/blog/categories/test-post/</loc>
