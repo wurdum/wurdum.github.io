@@ -5,7 +5,7 @@
 url: http://wurdum.github.io
 title: My Octopress Blog
 subtitle: A blogging framework for hackers.
-author: Your Name
+author: Pavel Rytikov
 simple_search: https://www.google.com/search
 description:
 
@@ -19,7 +19,7 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email:
+email: pavel.ritikov@gmail.com
 
 # ----------------------- #
 #    Jekyll & Plugins     #

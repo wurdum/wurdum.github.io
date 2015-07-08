@@ -6,7 +6,7 @@ comments: true
 categories: test-post
 ---
 
-``` c# Test case http://www.blog.wurdum.com/ Link
+``` c#
 [TestFixtureSetUp]
 public void CreateTestEnvironment() {
     _surveyDir = "TestSurvey" + TestUtils.GetPostfix();
