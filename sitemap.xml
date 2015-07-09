@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://wurdum.github.io/blog/2015/07/07/some-kind-of-new-blog-post/</loc>
+    <loc>http://www.blog.wurdum.com/blog/2015/07/07/some-kind-of-new-blog-post/</loc>
     <lastmod>2015-07-07T15:34:44+03:00</lastmod>
   </url>
   <url>
-    <loc>http://wurdum.github.io/</loc>
+    <loc>http://www.blog.wurdum.com/archives/</loc>
   </url>
   <url>
-    <loc>http://wurdum.github.io/blog/archives/</loc>
+    <loc>http://www.blog.wurdum.com/blog/</loc>
   </url>
   <url>
-    <loc>http://wurdum.github.io/archives/</loc>
+    <loc>http://www.blog.wurdum.com/</loc>
   </url>
   <url>
-    <loc>http://wurdum.github.io/blog/</loc>
+    <loc>http://www.blog.wurdum.com/blog/archives/</loc>
   </url>
   <url>
-    <loc>http://wurdum.github.io/blog/categories/</loc>
+    <loc>http://www.blog.wurdum.com/blog/categories/</loc>
   </url>
   <url>
-    <loc>http://wurdum.github.io/blog/categories/test-post/</loc>
+    <loc>http://www.blog.wurdum.com/blog/categories/test-post/</loc>
   </url>
 </urlset>

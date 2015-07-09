@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://wurdum.github.io/sitemap.xml 
+Sitemap: http://www.blog.wurdum.com/sitemap.xml 
