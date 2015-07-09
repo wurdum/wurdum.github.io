@@ -1,0 +1,30 @@
+figure.code {
+    border-radius: 5px;
+    font-size: 0.8em;
+}
+figure.code td.code {
+    padding-left: 0;
+}
+pre.line-numbers {
+    display: none;
+}
+article img, article video, article .flash-video, article .caption-wrapper {
+    webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    -ms-border-radius: 0.3em;
+    -o-border-radius: 0.3em;
+    border-radius: 0.3em;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: #fff 0.5em solid;
+}
+
+article img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
