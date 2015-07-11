@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: test-post | My Octopress Blog]]></title>
+  <title><![CDATA[Category: test-post | Do Code]]></title>
   <link href="http://www.blog.wurdum.com/blog/categories/test-post/atom.xml" rel="self"/>
   <link href="http://www.blog.wurdum.com/"/>
-  <updated>2015-07-11T00:30:58+03:00</updated>
+  <updated>2015-07-11T12:16:09+03:00</updated>
   <id>http://www.blog.wurdum.com/</id>
   <author>
     <name><![CDATA[Pavel Rytikov]]></name>
@@ -46,6 +46,9 @@ public void CreateTestEnvironment() {
 <p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
 
 <p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in MainDemo.Web\App_Data\Elmah.Errors, you will find the resulting xml files.By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
+
+<!-- more -->
+
 
 <p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
 
