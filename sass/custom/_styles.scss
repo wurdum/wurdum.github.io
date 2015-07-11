@@ -1,6 +1,6 @@
 figure.code {
     border-radius: 5px;
-    font-size: 0.8em;
+    font-size: 0.9em;
 }
 figure.code td.code {
     padding-left: 0;
@@ -22,9 +22,14 @@ article img, article video, article .flash-video, article .caption-wrapper {
     box-sizing: border-box;
     border: #fff 0.5em solid;
 }
-
 article img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+.container .mid-col .mid-col-container #content article[itemprop="blogPost"] {
+    padding: 40px 0px;
+}
+.container .mid-col .mid-col-container #content article[itemprop="blogPost"] .title {
+    font-size: 2.5em;
 }

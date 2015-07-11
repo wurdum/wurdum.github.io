@@ -1,11 +1,10 @@
 ---
 layout: post
-title: "Some kind of new blog post"
-date: 2015-07-07 15:34:44 +0300
+title: "Another kind of new post 2"
+date: 2015-07-11 12:37:38 +0300
 comments: true
-categories: test-post
+categories: 
 ---
-
 By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.
 
 We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.
