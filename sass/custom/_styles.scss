@@ -27,9 +27,11 @@ article img {
     margin-left: auto;
     margin-right: auto;
 }
-.container .mid-col .mid-col-container #content article[itemprop="blogPost"] {
+.container .mid-col .mid-col-container #content article[itemprop="blogPost"],
+.container .mid-col .mid-col-container #content article.post {
     padding: 40px 0px;
 }
-.container .mid-col .mid-col-container #content article[itemprop="blogPost"] .title {
+.container .mid-col .mid-col-container #content article[itemprop="blogPost"] .title,
+.container .mid-col .mid-col-container #content article.post .title {
     font-size: 2.5em;
 }
