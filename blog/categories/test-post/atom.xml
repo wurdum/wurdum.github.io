@@ -4,7 +4,7 @@
   <title><![CDATA[Category: test-post | Do Code]]></title>
   <link href="http://www.blog.wurdum.com/blog/categories/test-post/atom.xml" rel="self"/>
   <link href="http://www.blog.wurdum.com/"/>
-  <updated>2015-07-12T13:32:41+03:00</updated>
+  <updated>2015-07-12T14:45:59+03:00</updated>
   <id>http://www.blog.wurdum.com/</id>
   <author>
     <name><![CDATA[Pavel Rytikov]]></name>
@@ -31,6 +31,24 @@
 <p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in MainDemo.Web\App_Data\Elmah.Errors, you will find the resulting xml files.</p>
 
 <pre><code class="c#">[TestFixtureSetUp]
+public void CreateTestEnvironment() {
+    _surveyDir = "TestSurvey" + TestUtils.GetPostfix();
+    _conf = CreateConfForPackage(_surveyDir);
+
+    TestUtils.PreparePackageFor(DeployMode.Install, _conf.PackagePaths.Survey);
+    Directory.CreateDirectory(_conf.CommonPaths.Surveys);
+    Directory.CreateDirectory(_conf.CommonPaths.Backups);
+}
+
+public void CreateTestEnvironment() {
+    _surveyDir = "TestSurvey" + TestUtils.GetPostfix();
+    _conf = CreateConfForPackage(_surveyDir);
+
+    TestUtils.PreparePackageFor(DeployMode.Install, _conf.PackagePaths.Survey);
+    Directory.CreateDirectory(_conf.CommonPaths.Surveys);
+    Directory.CreateDirectory(_conf.CommonPaths.Backups);
+}
+
 public void CreateTestEnvironment() {
     _surveyDir = "TestSurvey" + TestUtils.GetPostfix();
     _conf = CreateConfForPackage(_surveyDir);

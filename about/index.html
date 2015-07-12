@@ -5,11 +5,11 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Blog Archives - Do Code</title>
+	<title>About - Do Code</title>
 	<meta name="author" content="Pavel Rytikov">
 
 	
-	<meta name="description" content=" 2015 Jul 11 Another kind of new post 2 Jul 11 Another kind of new post Jul 7 test-post Some kind of new blog post ">
+	<meta name="description" content="By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="Do Code" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://www.blog.wurdum.com/blog/archives/">
+	<link rel="canonical" href="http://www.blog.wurdum.com/about/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -104,63 +104,22 @@
 				
 			
 			<div class="mid-col-container">
-				<div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+				<div id="content" class="inner"><article class="page">
+    
+    <h1 class="title">About</h1>
+    
+    <div class="entry-content"><p>By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
 
-	
+<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
 
+<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in <code>MainDemo.Web\App_Data\Elmah.Errors</code>, you will find the resulting xml files.By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production <a href="http://http://en.wikipedia.org/wiki/File:Great_Pyramid_Diagram.svg">servers</a>.</p>
 
-	
-	
-	<section class="archives"><h1 class="year">2015</h1>
-
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2015-07-11T12:37:38+03:00" itemprop="datePublished">Jul 11</time></span>
-		<br>
-		<span class="tags">
-
-</span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2015/07/11/another-kind-of-new-post-2/">Another kind of new post 2</a></h1>
+<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
+</div>
 </article>
 
-	
 
-
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2015-07-11T12:37:32+03:00" itemprop="datePublished">Jul 11</time></span>
-		<br>
-		<span class="tags">
-
-</span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2015/07/11/another-kind-of-new-post/">Another kind of new post</a></h1>
-</article>
-
-	
-
-
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2015-07-07T15:34:44+03:00" itemprop="datePublished">Jul  7</time></span>
-		<br>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/test-post/'>test-post</a>
-
-
-</span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2015/07/07/some-kind-of-new-blog-post/">Some kind of new blog post</a></h1>
-</article>
-
-  </section>
-</div></div>
+</div>
 			</div>
 			<footer id="footer" class="inner">Copyright &copy; 2015
 
@@ -172,19 +131,6 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
 	</div>
 	
 
-
-<script type="text/javascript">
-      var disqus_shortname = 'docode';
-      
-        
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 
 
 </body>

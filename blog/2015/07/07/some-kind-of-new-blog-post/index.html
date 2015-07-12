@@ -25,6 +25,7 @@
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	
   
@@ -61,7 +62,7 @@
 
 <nav id="main-nav"><ul class="main">
     <li><a href="/">Blog</a></li>
-    <li><a href="http://about.me/shashankmehta">About</a></li>
+    <li><a href="/about">About</a></li>
     <li><a href="/blog/archives">Archives</a></li>
 </ul>
 </nav>
@@ -126,7 +127,43 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
 </pre></td><td class='code'><pre><code class='c#'><span class='line'><span class="na">[TestFixtureSetUp]</span>
+</span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateTestEnvironment</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">_surveyDir</span> <span class="p">=</span> <span class="s">&quot;TestSurvey&quot;</span> <span class="p">+</span> <span class="n">TestUtils</span><span class="p">.</span><span class="n">GetPostfix</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">_conf</span> <span class="p">=</span> <span class="n">CreateConfForPackage</span><span class="p">(</span><span class="n">_surveyDir</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">TestUtils</span><span class="p">.</span><span class="n">PreparePackageFor</span><span class="p">(</span><span class="n">DeployMode</span><span class="p">.</span><span class="n">Install</span><span class="p">,</span> <span class="n">_conf</span><span class="p">.</span><span class="n">PackagePaths</span><span class="p">.</span><span class="n">Survey</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Surveys</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Backups</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateTestEnvironment</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">_surveyDir</span> <span class="p">=</span> <span class="s">&quot;TestSurvey&quot;</span> <span class="p">+</span> <span class="n">TestUtils</span><span class="p">.</span><span class="n">GetPostfix</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">_conf</span> <span class="p">=</span> <span class="n">CreateConfForPackage</span><span class="p">(</span><span class="n">_surveyDir</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">TestUtils</span><span class="p">.</span><span class="n">PreparePackageFor</span><span class="p">(</span><span class="n">DeployMode</span><span class="p">.</span><span class="n">Install</span><span class="p">,</span> <span class="n">_conf</span><span class="p">.</span><span class="n">PackagePaths</span><span class="p">.</span><span class="n">Survey</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Surveys</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Backups</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
 </span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateTestEnvironment</span><span class="p">()</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">_surveyDir</span> <span class="p">=</span> <span class="s">&quot;TestSurvey&quot;</span> <span class="p">+</span> <span class="n">TestUtils</span><span class="p">.</span><span class="n">GetPostfix</span><span class="p">();</span>
 </span><span class='line'>    <span class="n">_conf</span> <span class="p">=</span> <span class="n">CreateConfForPackage</span><span class="p">(</span><span class="n">_surveyDir</span><span class="p">);</span>
