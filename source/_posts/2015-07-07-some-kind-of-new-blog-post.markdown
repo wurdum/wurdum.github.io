@@ -28,6 +28,24 @@ public void CreateTestEnvironment() {
     Directory.CreateDirectory(_conf.CommonPaths.Surveys);
     Directory.CreateDirectory(_conf.CommonPaths.Backups);
 }
+
+public void CreateTestEnvironment() {
+    _surveyDir = "TestSurvey" + TestUtils.GetPostfix();
+    _conf = CreateConfForPackage(_surveyDir);
+
+    TestUtils.PreparePackageFor(DeployMode.Install, _conf.PackagePaths.Survey);
+    Directory.CreateDirectory(_conf.CommonPaths.Surveys);
+    Directory.CreateDirectory(_conf.CommonPaths.Backups);
+}
+
+public void CreateTestEnvironment() {
+    _surveyDir = "TestSurvey" + TestUtils.GetPostfix();
+    _conf = CreateConfForPackage(_surveyDir);
+
+    TestUtils.PreparePackageFor(DeployMode.Install, _conf.PackagePaths.Survey);
+    Directory.CreateDirectory(_conf.CommonPaths.Surveys);
+    Directory.CreateDirectory(_conf.CommonPaths.Backups);
+}
 ```
 
 By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.

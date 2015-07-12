@@ -1,34 +1,32 @@
-$bg-color: #002b36;
+article {
+    code, pre {
+        font-family: 'Open Sans', Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", sans-serif;
+    }
 
-figure.code {
-    background-color: $bg-color;
-    border-radius: 5px;
-}
-figure.code td.code {
-    padding-left: 0;
-}
-figure.code table {
-    background-color: $bg-color;
-}
-pre.line-numbers {
-    display: none;
-}
-article code {
-    font-size: 0.8em;
-}
-article img, article video, article .flash-video, article .caption-wrapper {
-    webkit-border-radius: 0.3em;
-    -moz-border-radius: 0.3em;
-    -ms-border-radius: 0.3em;
-    -o-border-radius: 0.3em;
-    border-radius: 0.3em;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: #fff 0.5em solid;
+    code, .line-numer {
+        font-size: 0.9em;
+    }
+
+    img, video, .flash-video, .caption-wrapper {
+        webkit-border-radius: 0.3em;
+        -moz-border-radius: 0.3em;
+        -ms-border-radius: 0.3em;
+        -o-border-radius: 0.3em;
+        border-radius: 0.3em;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
+        -moz-box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border: #fff 0.5em solid;
+    }
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 article img {
     display: block;
