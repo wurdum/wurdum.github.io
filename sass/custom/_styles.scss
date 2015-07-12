@@ -1,12 +1,20 @@
+$bg-color: #002b36;
+
 figure.code {
+    background-color: $bg-color;
     border-radius: 5px;
-    font-size: 0.9em;
 }
 figure.code td.code {
     padding-left: 0;
 }
+figure.code table {
+    background-color: $bg-color;
+}
 pre.line-numbers {
     display: none;
+}
+article code {
+    font-size: 0.8em;
 }
 article img, article video, article .flash-video, article .caption-wrapper {
     webkit-border-radius: 0.3em;
