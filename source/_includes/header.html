@@ -14,7 +14,7 @@
 <nav id="main-nav">{% include navigation.html %}</nav>
 <nav id="sub-nav">
 	<div class="social">
-		{% if site.email %}
+		{% if site.email and site.show_email %}
 			<a class="email" href="mailto:{{ site.email }}" title="Email">Email</a>
 		{% endif %}
 		{% if site.facebook_user %}

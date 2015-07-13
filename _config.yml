@@ -20,6 +20,7 @@ subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
 email: pavel.ritikov@gmail.com
+show_email: false
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -79,7 +80,7 @@ google_plus_one_size: medium
 
 # Google Plus Profile
 # Hidden: No visible button, just add author information to search results
-googleplus_user: +PavelRitikov
+googleplus_user:
 googleplus_hidden: false
 
 # Pinboard
@@ -97,5 +98,9 @@ disqus_show_comment_count: false
 # Google Analytics
 google_analytics_tracking_id: UA-65031537-1
 
-# Facebook Like
+# Facebook
 facebook_like: false
+facebook_user: pavel.rytikov
+
+# LinkedIn
+linkedin_user: pavelrytikov
