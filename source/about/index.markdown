@@ -6,10 +6,9 @@ comments: false
 sharing: false
 footer: true
 ---
-By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.
 
-We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.
+Hey! My name is Pavel Rytikov and I'm passionate software engineer with 5 years experience in .Net development mostly for web-based solutions. Currently I'm working at Intergam where we create good-quality, customer focused data collection and analysis software.
 
-One of the advantages of using XML files is that the files can be copied to another machine. If you look in `MainDemo.Web\App_Data\Elmah.Errors`, you will find the resulting xml files.By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production [servers](http://http://en.wikipedia.org/wiki/File:Great_Pyramid_Diagram.svg).
+While I love my daily job and .Net platform, I also enjoy participating in open source projects and exploring another programming languages and tools that constantly appears in IT world.
 
-We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.
+I invite you to subscribe via [RSS](/atom.xml) and [follow me](https://twitter.com/thewurdum). Feel free to hit me up at email or any other way. I will be glad to help you with any issue or just discuss a new season of some series :)
