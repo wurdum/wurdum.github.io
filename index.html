@@ -9,7 +9,7 @@
 	<meta name="author" content="Pavel Rytikov">
 
 	
-	<meta name="description" content="2015-07-11 Another Kind of New Post 2 By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to &hellip;">
+	<meta name="description" content="2015-11-15 mvc4 Model Validation Basics in ASP.NET MVC Any system that receives user input must validate it. ASP.NET MVC applications are not an &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -122,167 +122,23 @@
   
 
 
-<time datetime="2015-07-11T12:37:38+03:00" data-updated="true" itemprop="datePublished">2015-07-11</time></div>
-		<div class="tags">
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2015/07/11/another-kind-of-new-post-2/" itemprop="url">Another Kind of New Post 2</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
-
-<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
-
-<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in <code>MainDemo.Web\App_Data\Elmah.Errors</code>, you will find the resulting xml files.By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production <a href="http://http://en.wikipedia.org/wiki/File:Great_Pyramid_Diagram.svg">servers</a>.</p>
-
-<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
-
-<p><img src="https://raw.githubusercontent.com/ZeroSharp/zerosharp.github.com/master/images/blog/an-afternoon-with-two-fields-medallists-002.jpg"></p>
-
-<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in MainDemo.Web\App_Data\Elmah.Errors, you will find the resulting xml files.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='c#'><span class='line'><span class="na">[TestFixtureSetUp]</span>
-</span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateTestEnvironment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">_surveyDir</span> <span class="p">=</span> <span class="s">&quot;TestSurvey&quot;</span> <span class="p">+</span> <span class="n">TestUtils</span><span class="p">.</span><span class="n">GetPostfix</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">_conf</span> <span class="p">=</span> <span class="n">CreateConfForPackage</span><span class="p">(</span><span class="n">_surveyDir</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">TestUtils</span><span class="p">.</span><span class="n">PreparePackageFor</span><span class="p">(</span><span class="n">DeployMode</span><span class="p">.</span><span class="n">Install</span><span class="p">,</span> <span class="n">_conf</span><span class="p">.</span><span class="n">PackagePaths</span><span class="p">.</span><span class="n">Survey</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Surveys</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Backups</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
-
-<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
-
-<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in MainDemo.Web\App_Data\Elmah.Errors, you will find the resulting xml files.By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
-
-
-		
-		<a href="/blog/2015/07/11/another-kind-of-new-post-2/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-07-11T12:37:32+03:00" data-updated="true" itemprop="datePublished">2015-07-11</time></div>
-		<div class="tags">
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2015/07/11/another-kind-of-new-post/" itemprop="url">Another Kind of New Post</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
-
-<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
-
-<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in <code>MainDemo.Web\App_Data\Elmah.Errors</code>, you will find the resulting xml files.By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production <a href="http://http://en.wikipedia.org/wiki/File:Great_Pyramid_Diagram.svg">servers</a>.</p>
-
-<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
-
-<p><img src="https://raw.githubusercontent.com/ZeroSharp/zerosharp.github.com/master/images/blog/an-afternoon-with-two-fields-medallists-002.jpg"></p>
-
-<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in MainDemo.Web\App_Data\Elmah.Errors, you will find the resulting xml files.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='c#'><span class='line'><span class="na">[TestFixtureSetUp]</span>
-</span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateTestEnvironment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">_surveyDir</span> <span class="p">=</span> <span class="s">&quot;TestSurvey&quot;</span> <span class="p">+</span> <span class="n">TestUtils</span><span class="p">.</span><span class="n">GetPostfix</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">_conf</span> <span class="p">=</span> <span class="n">CreateConfForPackage</span><span class="p">(</span><span class="n">_surveyDir</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">TestUtils</span><span class="p">.</span><span class="n">PreparePackageFor</span><span class="p">(</span><span class="n">DeployMode</span><span class="p">.</span><span class="n">Install</span><span class="p">,</span> <span class="n">_conf</span><span class="p">.</span><span class="n">PackagePaths</span><span class="p">.</span><span class="n">Survey</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Surveys</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Backups</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
-
-<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
-
-<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in MainDemo.Web\App_Data\Elmah.Errors, you will find the resulting xml files.By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
-
-
-		
-		<a href="/blog/2015/07/11/another-kind-of-new-post/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-07-07T15:34:44+03:00" data-updated="true" itemprop="datePublished">2015-07-07</time></div>
+<time datetime="2015-11-15T21:47:50+02:00" data-updated="true" itemprop="datePublished">2015-11-15</time></div>
 		<div class="tags">
 
 
-	<a class='category' href='/blog/categories/test-post/'>test-post</a>
+	<a class='category' href='/blog/categories/mvc4/'>mvc4</a>
 
 
 </div>
 		
 	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2015/07/07/some-kind-of-new-blog-post/" itemprop="url">Some Kind of New Blog Post</a></h1>
+	<h1 class="title" itemprop="name"><a href="/blog/2015/11/15/model-validation-basics-in-asp-dot-net-mvc/" itemprop="url">Model Validation Basics in ASP.NET MVC</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		<p>By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
+		<p>Any system that receives user input must validate it. ASP.NET MVC applications are not an exception, that is why framework creators implemented several approaches how it could be done. In this article I&rsquo;m not going into implementation details. Here I want to analyse each of approaches and choose the one which most flexible. Also, I&rsquo;m not going to touch on the client validation, because I&rsquo;m sure that it have to be implemented independently from server side. Well, lets look at each of approaches:</p>
 
-<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
+<h2>Controller validation</h2>
 
-<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in <code>MainDemo.Web\App_Data\Elmah.Errors</code>, you will find the resulting xml files.By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production <a href="http://http://en.wikipedia.org/wiki/File:Great_Pyramid_Diagram.svg">servers</a>.</p>
-
-<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
-
-<p><img src="https://raw.githubusercontent.com/ZeroSharp/zerosharp.github.com/master/images/blog/an-afternoon-with-two-fields-medallists-002.jpg"></p>
-
-<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in MainDemo.Web\App_Data\Elmah.Errors, you will find the resulting xml files.</p>
+<p>Placing validation into controller is the easiest and most direct approach.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -305,51 +161,35 @@
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
 <span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='c#'><span class='line'><span class="na">[TestFixtureSetUp]</span>
-</span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateTestEnvironment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">_surveyDir</span> <span class="p">=</span> <span class="s">&quot;TestSurvey&quot;</span> <span class="p">+</span> <span class="n">TestUtils</span><span class="p">.</span><span class="n">GetPostfix</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">_conf</span> <span class="p">=</span> <span class="n">CreateConfForPackage</span><span class="p">(</span><span class="n">_surveyDir</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">TestUtils</span><span class="p">.</span><span class="n">PreparePackageFor</span><span class="p">(</span><span class="n">DeployMode</span><span class="p">.</span><span class="n">Install</span><span class="p">,</span> <span class="n">_conf</span><span class="p">.</span><span class="n">PackagePaths</span><span class="p">.</span><span class="n">Survey</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Surveys</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Backups</span><span class="p">);</span>
+</pre></td><td class='code'><pre><code class='c#'><span class='line'><span class="k">public</span> <span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">public</span> <span class="kt">string</span> <span class="n">Login</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>    <span class="k">public</span> <span class="kt">string</span> <span class="n">Password</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateTestEnvironment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">_surveyDir</span> <span class="p">=</span> <span class="s">&quot;TestSurvey&quot;</span> <span class="p">+</span> <span class="n">TestUtils</span><span class="p">.</span><span class="n">GetPostfix</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">_conf</span> <span class="p">=</span> <span class="n">CreateConfForPackage</span><span class="p">(</span><span class="n">_surveyDir</span><span class="p">);</span>
+</span><span class='line'><span class="na">[HttpPost]</span>
+</span><span class='line'><span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">CreateUser</span><span class="p">(</span><span class="n">User</span> <span class="n">user</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Login</span><span class="p">))</span>
+</span><span class='line'>        <span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;Login&quot;</span><span class="p">,</span> <span class="s">&quot;Please specify Login&quot;</span><span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">TestUtils</span><span class="p">.</span><span class="n">PreparePackageFor</span><span class="p">(</span><span class="n">DeployMode</span><span class="p">.</span><span class="n">Install</span><span class="p">,</span> <span class="n">_conf</span><span class="p">.</span><span class="n">PackagePaths</span><span class="p">.</span><span class="n">Survey</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Surveys</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Backups</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Password</span><span class="p">))</span>
+</span><span class='line'>        <span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;Password&quot;</span><span class="p">,</span> <span class="s">&quot;Please specify Password&quot;</span><span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateTestEnvironment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">_surveyDir</span> <span class="p">=</span> <span class="s">&quot;TestSurvey&quot;</span> <span class="p">+</span> <span class="n">TestUtils</span><span class="p">.</span><span class="n">GetPostfix</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">_conf</span> <span class="p">=</span> <span class="n">CreateConfForPackage</span><span class="p">(</span><span class="n">_surveyDir</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(!</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">TestUtils</span><span class="p">.</span><span class="n">PreparePackageFor</span><span class="p">(</span><span class="n">DeployMode</span><span class="p">.</span><span class="n">Install</span><span class="p">,</span> <span class="n">_conf</span><span class="p">.</span><span class="n">PackagePaths</span><span class="p">.</span><span class="n">Survey</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Surveys</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">_conf</span><span class="p">.</span><span class="n">CommonPaths</span><span class="p">.</span><span class="n">Backups</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">_userService</span><span class="p">.</span><span class="n">CreateUser</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;UsersList&quot;</span><span class="p">,</span> <span class="s">&quot;Home&quot;</span><span class="p">);</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
-
-<p>We chose to use an XML file for each error but ELMAH is entirely pluggable. There are dozens of alternatives for persisting the error log including Sql Server, an RSS feeds, to Twitter, even to an iPhone app. There are even third party sites such as elmah.io who will host your error logs for you.</p>
-
-<p>One of the advantages of using XML files is that the files can be copied to another machine. If you look in MainDemo.Web\App_Data\Elmah.Errors, you will find the resulting xml files.By default, ELMAH is configured to disallow remote access to the error logs - only a local user can get to elmah.axd. If you take care of the security implications it can be very useful to enable remote access and monitor the logs on your production servers.</p>
+<p>We verify model, add errors to ModelState and then just check ModelState.IsValid. This way has obvious advantage - simplicity. We don&rsquo;t have to isolate logic, any dependencies accessible to controller are also accessible to validator. Logic is easy to find and easy to read. Disadvantages are not less-obvious. Necessity to validate the same model in multiple controllers brings to <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> principle violation. Inability to isolate validation logic leads to troubles in testing. When system complexity arises, disadvantages outweigh the advantages. I could hardly imagine production system where usage of controller validation would be reasonable.</p>
 
 
 		
-		<a href="/blog/2015/07/07/some-kind-of-new-blog-post/" class="more-link">Read on &rarr;</a>
+		<a href="/blog/2015/11/15/model-validation-basics-in-asp-dot-net-mvc/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>

@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://www.blog.wurdum.com/blog/2015/07/11/another-kind-of-new-post-2/</loc>
-    <lastmod>2015-07-11T12:37:38+03:00</lastmod>
-  </url>
-  <url>
-    <loc>http://www.blog.wurdum.com/blog/2015/07/11/another-kind-of-new-post/</loc>
-    <lastmod>2015-07-11T12:37:32+03:00</lastmod>
-  </url>
-  <url>
-    <loc>http://www.blog.wurdum.com/blog/2015/07/07/some-kind-of-new-blog-post/</loc>
-    <lastmod>2015-07-07T15:34:44+03:00</lastmod>
+    <loc>http://www.blog.wurdum.com/blog/2015/11/15/model-validation-basics-in-asp-dot-net-mvc/</loc>
+    <lastmod>2015-11-15T21:47:50+02:00</lastmod>
   </url>
   <url>
     <loc>http://www.blog.wurdum.com/blog/</loc>
@@ -31,6 +23,6 @@
     <loc>http://www.blog.wurdum.com/blog/categories/</loc>
   </url>
   <url>
-    <loc>http://www.blog.wurdum.com/blog/categories/test-post/</loc>
+    <loc>http://www.blog.wurdum.com/blog/categories/mvc4/</loc>
   </url>
 </urlset>
