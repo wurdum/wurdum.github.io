@@ -11,4 +11,4 @@ Hey! My name is Pavel Rytikov and I'm passionate software engineer with 5 years 
 
 While I love my daily job and .Net platform, I also enjoy participating in open source projects and exploring another programming languages and tools that constantly appears in IT world.
 
-I invite you to subscribe via [RSS](/atom.xml) and [follow me](https://twitter.com/thewurdum). Feel free to hit me up at email or any other way. I will be glad to help you with any issue or just discuss a new season of some series :)
+I invite you to [subscribe](/atom.xml) and [follow me](https://twitter.com/thewurdum). Feel free to hit me up at email or any other way. I will be glad to help you with any issue or just discuss a new season of some series :)
