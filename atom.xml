@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Do Code]]></title>
-  <link href="http://www.blog.wurdum.com/atom.xml" rel="self"/>
-  <link href="http://www.blog.wurdum.com/"/>
-  <updated>2015-11-19T18:33:39+02:00</updated>
-  <id>http://www.blog.wurdum.com/</id>
+  <link href="http://www.wurdum.com/atom.xml" rel="self"/>
+  <link href="http://www.wurdum.com/"/>
+  <updated>2015-11-19T22:10:49+02:00</updated>
+  <id>http://www.wurdum.com/</id>
   <author>
     <name><![CDATA[Pavel Rytikov]]></name>
     <email><![CDATA[pavel.ritikov@gmail.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Model validation basics in ASP.NET MVC]]></title>
-    <link href="http://www.blog.wurdum.com/blog/2015/11/15/model-validation-basics-in-asp-dot-net-mvc/"/>
+    <link href="http://www.wurdum.com/blog/2015/11/15/model-validation-basics-in-asp-dot-net-mvc/"/>
     <updated>2015-11-15T21:47:50+02:00</updated>
-    <id>http://www.blog.wurdum.com/blog/2015/11/15/model-validation-basics-in-asp-dot-net-mvc</id>
+    <id>http://www.wurdum.com/blog/2015/11/15/model-validation-basics-in-asp-dot-net-mvc</id>
     <content type="html"><![CDATA[<p>Any system that receives user input must validate it. ASP.NET MVC applications are not an exception, that is why framework creators implemented several approaches how it could be done. In this article I&rsquo;m not going into implementation details. Here I want to analyse each of approaches and choose the one which most flexible. Also, I&rsquo;m not going to touch on the client validation, because I&rsquo;m sure that it have to be implemented independently from server side. Well, lets look at each of approaches:</p>
 
 <h2>Controller validation</h2>
