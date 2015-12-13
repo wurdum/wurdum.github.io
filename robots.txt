@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://www.wurdum.com/sitemap.xml 
