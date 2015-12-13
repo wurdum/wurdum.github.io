@@ -1,0 +1,41 @@
+baseurl = "http://www.wurdum.com/"
+languageCode = "en-us"
+title = "Do Code"
+builddrafts = false
+canonifyurls = true
+theme = "greyshade"
+
+[author]
+name = "Pavel Rytikov"
+# email will use for gravatar
+email = "pavel.ritikov@gmail.com"
+
+[taxonomies]
+category = "categories"
+
+[params]
+# site description, will show under navigation
+description = ""
+
+# RSS / Email (optional) subscription links (change if using something like Feedburner)
+subscribe_rss = "/index.xml"
+subscribe_email = ""
+
+# social links
+facebook_user = "pavel.rytikov"
+twitter_user = "thewurdum"
+github_user = "wurdum"
+linkedin_user = "pavelrytikov"
+
+# share links
+facebook_like = false
+twitter_tweet_button = true
+google_plus_one = false
+addthis_profile_id = "ra-566d4c1bd2d4f5f6"
+
+# Disqus Comments
+disqus_short_name = "docode"
+disqus_show_comment_count = false
+
+# google analytics
+google_analytics_tracking_id = "UA-65031537-1"
