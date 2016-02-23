@@ -7,7 +7,81 @@
     <language>en-us</language>
     <author>Pavel Rytikov</author>
     
-    <updated>Sun, 15 Nov 2015 21:47:50 EET</updated>
+    <updated>Tue, 23 Feb 2016 23:25:06 EET</updated>
+    
+    <item>
+      <title>Restoring view model state</title>
+      <link>http://www.wurdum.com/post/restoring-view-model-state/</link>
+      <pubDate>Tue, 23 Feb 2016 23:25:06 EET</pubDate>
+      <author>Pavel Rytikov</author>
+      <guid>http://www.wurdum.com/post/restoring-view-model-state/</guid>
+      <description>&lt;p&gt;Today I want to share with you a pattern which I use in classic ASP.NET MVC web sites. It solves the problem of filling model* properties that won&amp;rsquo;t be sent with http request (eg select items). Let&amp;rsquo;s take a closer look.&lt;/p&gt;
+
+&lt;p&gt;Most of the model properties could be divided into two groups:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Domain properties that characterize model&lt;/li&gt;
+&lt;li&gt;Additional properties that describes domain properties&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;// Some model
+public class Account
+{
+    // Domain property
+    public int CountryId { get; set; }
+   
+    // Additional property
+    public IEnumerable&amp;lt;KeyValuePair&amp;lt;int, string&amp;gt;&amp;gt; Countries { get; set; }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Domain properties do not require extra logic, they come with http response and we send them within http request. Additional properties, on the contrary, cause a problem because they can&amp;rsquo;t be sent along with domain properties. Additional properties are not the part of the domain model and could be large. They do not come to application with request and so these properties are empty. As result we can&amp;rsquo;t validate domain properties using additional properties (like to check if selected Country is one of available Countries). When model has additional properties, they have to be filled during processing form request.&lt;/p&gt;
+
+&lt;p&gt;So, every time we create a model, we need to fill additional properties. Simple solution is to reside filling logic in controller. But doing so we receive a code duplication - we have filling logic where we render view and we have it in action that handles form request. Clearly makes sense to extract filling logic into separate class, whose responsibility would be to populate additional properties.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;public class AccountFiller : IViewModelFiller&amp;lt;Account&amp;gt;
+{
+    public void Fill(Account model) {
+        model.Countries = Countries.GetAvailable();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As previously, we&amp;rsquo;re going to fill model in two places - in controller, when we create model, and in model binder, when we bind form values to model. In model binder we fill model before validation. So we can use additional properties during validation (using FluentValidation).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;// ...somewhere in controller
+public  ActionResult Account() {
+    var account = new Account { CountryId = 1 };
+
+    _accountFiller.Fill(account);
+
+    return View(account);
+}
+
+public class AccountModelBinder : DefaultModelBinder
+{
+    private readonly IViewModelFiller&amp;lt;Account&amp;gt; _filler;
+
+    public AccountModelBinder(IViewModelFiller&amp;lt;Account&amp;gt; filler) {
+        _filler = filler;
+    }
+
+    protected override void OnModelUpdated(ControllerContext controllerContext, 
+        ModelBindingContext bindingContext) {
+        var model = (Account)bindingContext.Model;
+
+        _filler.Fill(model);
+       
+        base.OnModelUpdated(controllerContext, bindingContext);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This pattern works better when DI and FluentValidation are being used. It reduces code duplication and helps to build less coupled, easy to extend testable architecture of request handling pipeline.&lt;/p&gt;
+
+&lt;p&gt;*Hereinafter, when I say model, I actually mean view model. The question of applying view models is beyond the scope of this article and won&amp;rsquo;t be discussed here.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Model validation basics in ASP.NET MVC</title>

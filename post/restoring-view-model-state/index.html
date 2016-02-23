@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>About - Do Code</title>
+	<title>Restoring view model state - Do Code</title>
 	<meta name="author" content="map[name:Pavel Rytikov email:pavel.ritikov@gmail.com]">
 
 	
@@ -19,7 +19,7 @@
     
 	<link href='http://www.wurdum.com/index.xml' rel="alternate" title="Do Code" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://www.wurdum.com/about/">
+	<link rel="canonical" href="http://www.wurdum.com/post/restoring-view-model-state/">
 	<link href="http://www.wurdum.com//favicon.png" rel="shortcut icon">
 	<link href="http://www.wurdum.com//css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="http://www.wurdum.com//css/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -110,14 +110,97 @@
 				<div id="content" class="inner">
 					<div itemscope itemtype="http://schema.org/Blog">
 					<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <h1 class="title" itemprop="name">About</h1>
-	<div class="entry-content" itemprop="articleBody"><p>Hey! My name is Pavel Rytikov and I&rsquo;m passionate software engineer with 5 years experience in .Net development mostly for web-based solutions. Currently I&rsquo;m working at Intergam where we create good-quality, customer focused data collection and analysis software.</p>
+    <h1 class="title" itemprop="name">Restoring view model state</h1>
+	<div class="entry-content" itemprop="articleBody"><p>Today I want to share with you a pattern which I use in classic ASP.NET MVC web sites. It solves the problem of filling model* properties that won&rsquo;t be sent with http request (eg select items). Let&rsquo;s take a closer look.</p>
 
-<p>While I love my daily job and .Net platform, I also enjoy participating in open source projects and exploring another programming languages and tools that constantly appears in IT world.</p>
+<p>Most of the model properties could be divided into two groups:</p>
 
-<p>I invite you to <a href="http://www.wurdum.com/index.xml">subscribe</a> and <a href="https://twitter.com/thewurdum">follow me</a>. Feel free to hit me up at email or any other way. I will be glad to help you with any issue or just discuss a new season of some series :)</p>
+<ul>
+<li>Domain properties that characterize model</li>
+<li>Additional properties that describes domain properties</li>
+</ul>
+
+<pre><code class="language-c#">// Some model
+public class Account
+{
+    // Domain property
+    public int CountryId { get; set; }
+   
+    // Additional property
+    public IEnumerable&lt;KeyValuePair&lt;int, string&gt;&gt; Countries { get; set; }
+}
+</code></pre>
+
+<p>Domain properties do not require extra logic, they come with http response and we send them within http request. Additional properties, on the contrary, cause a problem because they can&rsquo;t be sent along with domain properties. Additional properties are not the part of the domain model and could be large. They do not come to application with request and so these properties are empty. As result we can&rsquo;t validate domain properties using additional properties (like to check if selected Country is one of available Countries). When model has additional properties, they have to be filled during processing form request.</p>
+
+<p>So, every time we create a model, we need to fill additional properties. Simple solution is to reside filling logic in controller. But doing so we receive a code duplication - we have filling logic where we render view and we have it in action that handles form request. Clearly makes sense to extract filling logic into separate class, whose responsibility would be to populate additional properties.</p>
+
+<pre><code class="language-c#">public class AccountFiller : IViewModelFiller&lt;Account&gt;
+{
+    public void Fill(Account model) {
+        model.Countries = Countries.GetAvailable();
+    }
+}
+</code></pre>
+
+<p>As previously, we&rsquo;re going to fill model in two places - in controller, when we create model, and in model binder, when we bind form values to model. In model binder we fill model before validation. So we can use additional properties during validation (using FluentValidation).</p>
+
+<pre><code class="language-c#">// ...somewhere in controller
+public  ActionResult Account() {
+    var account = new Account { CountryId = 1 };
+
+    _accountFiller.Fill(account);
+
+    return View(account);
+}
+
+public class AccountModelBinder : DefaultModelBinder
+{
+    private readonly IViewModelFiller&lt;Account&gt; _filler;
+
+    public AccountModelBinder(IViewModelFiller&lt;Account&gt; filler) {
+        _filler = filler;
+    }
+
+    protected override void OnModelUpdated(ControllerContext controllerContext, 
+        ModelBindingContext bindingContext) {
+        var model = (Account)bindingContext.Model;
+
+        _filler.Fill(model);
+       
+        base.OnModelUpdated(controllerContext, bindingContext);
+    }
+}
+</code></pre>
+
+<p>This pattern works better when DI and FluentValidation are being used. It reduces code duplication and helps to build less coupled, easy to extend testable architecture of request handling pipeline.</p>
+
+<p>*Hereinafter, when I say model, I actually mean view model. The question of applying view models is beyond the scope of this article and won&rsquo;t be discussed here.</p>
 </div></article>
 					
+						<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	
+	</div>
+	
+  	<script type="text/javascript" src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-566d4c1bd2d4f5f6'></script>
+  	
+</div>
+
+					
+					
+					<section id="comment">
+					    <h1 class="title">Comments</h1>
+					    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+					</section>
 					
 					
 

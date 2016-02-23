@@ -113,6 +113,51 @@
 					
 				        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     <div class="meta">
+		<div class="date"><time datetime='2016-02-23 23:25:06 &#43;0200 EET' data-updated="true" itemprop="datePublished">2016-02-23</time>
+</div>
+		<div class="tags">
+
+
+	
+	
+	    <a href="http://www.wurdum.com//categories/mvc4"> mvc4 </a>
+	
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="http://www.wurdum.com/post/restoring-view-model-state/" itemprop="url">Restoring view model state</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Today I want to share with you a pattern which I use in classic ASP.NET MVC web sites. It solves the problem of filling model* properties that won&rsquo;t be sent with http request (eg select items). Let&rsquo;s take a closer look.</p>
+
+<p>Most of the model properties could be divided into two groups:</p>
+
+<ul>
+<li>Domain properties that characterize model</li>
+<li>Additional properties that describes domain properties</li>
+</ul>
+
+<pre><code class="language-c#">// Some model
+public class Account
+{
+    // Domain property
+    public int CountryId { get; set; }
+   
+    // Additional property
+    public IEnumerable&lt;KeyValuePair&lt;int, string&gt;&gt; Countries { get; set; }
+}
+</code></pre>
+
+<p>Domain properties do not require extra logic, they come with http response and we send them within http request. Additional properties, on the contrary, cause a problem because they can&rsquo;t be sent along with domain properties. Additional properties are not the part of the domain model and could be large. They do not come to application with request and so these properties are empty. As result we can&rsquo;t validate domain properties using additional properties (like to check if selected Country is one of available Countries). When model has additional properties, they have to be filled during processing form request.</p>
+
+		<a href="http://www.wurdum.com/post/restoring-view-model-state/" class="more-link">Read on →</a>
+	</div>
+</article>
+
+				    
+				        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="meta">
 		<div class="date"><time datetime='2015-11-15 21:47:50 &#43;0200 EET' data-updated="true" itemprop="datePublished">2015-11-15</time>
 </div>
 		<div class="tags">
@@ -173,7 +218,7 @@ public ActionResult CreateUser(User user) {
 					</nav>
 				</div>
 			</div>
-			<footer id="footer" class="inner">Copyright &copy; 2015
+			<footer id="footer" class="inner">Copyright &copy; 2016
 
     Pavel Rytikov
 
