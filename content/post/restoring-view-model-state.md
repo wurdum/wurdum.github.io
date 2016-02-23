@@ -6,6 +6,8 @@ categories = ["mvc4"]
 
 Today I want to share with you a pattern which I use in classic ASP.NET MVC web sites. It solves the problem of filling model* properties that won't be sent with http request (eg select items). Let's take a closer look.
 
+![Filler sequence diagram](/img/filler.png)
+
 Most of the model properties could be divided into two groups:
 
 * Domain properties that characterize model
