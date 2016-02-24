@@ -72,3 +72,5 @@ public class AccountModelBinder : DefaultModelBinder
 This pattern works better when DI and FluentValidation are being used. It reduces code duplication and helps to build less coupled, easy to extend testable architecture of request handling pipeline.
 
 *Hereinafter, when I say model, I actually mean view model. The question of applying view models is beyond the scope of this article and won't be discussed here.
+
+Example implementation can be found on [github](https://github.com/wurdum/examples.filler)
