@@ -74,7 +74,8 @@
     }
 
     [CompilerGenerated]
-    private sealed class CompilerGeneratedYield : IEnumerable&amp;lt;int&amp;gt;, IEnumerable, IEnumerator&amp;lt;int&amp;gt;, IDisposable, IEnumerator
+    private sealed class CompilerGeneratedYield : IEnumerable&amp;lt;int&amp;gt;, 
+        IEnumerable, IEnumerator&amp;lt;int&amp;gt;, IDisposable, IEnumerator
     {
         private readonly int _initialThreadId;
         private int _current;
