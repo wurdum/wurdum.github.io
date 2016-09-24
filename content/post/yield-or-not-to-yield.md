@@ -66,7 +66,8 @@ internal class Program
     }
 
     [CompilerGenerated]
-    private sealed class CompilerGeneratedYield : IEnumerable<int>, IEnumerable, IEnumerator<int>, IDisposable, IEnumerator
+    private sealed class CompilerGeneratedYield : IEnumerable<int>, 
+        IEnumerable, IEnumerator<int>, IDisposable, IEnumerator
     {
         private readonly int _initialThreadId;
         private int _current;
