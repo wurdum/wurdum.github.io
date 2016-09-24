@@ -1,0 +1,470 @@
+<!DOCTYPE HTML>
+
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<title>Yield or not to yield - Do Code</title>
+	<meta name="author" content="map[name:Pavel Rytikov email:pavel.ritikov@gmail.com]">
+
+	
+	
+	<meta name="description" content="">
+	
+
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+	<link href='http://www.wurdum.com/index.xml' rel="alternate" title="Do Code" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://www.wurdum.com/post/yield-or-not-to-yield/">
+	<link href="http://www.wurdum.com//favicon.png" rel="shortcut icon">
+	<link href="http://www.wurdum.com//css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="http://www.wurdum.com//css/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="http://www.wurdum.com//css/custom.css" media="screen, projection" rel="stylesheet" type="text/css">
+	
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="http://www.wurdum.com//css/highlight/solarized-dark.css">
+    <script src="http://www.wurdum.com//js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+	
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-65031537-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	
+	<script src="http://www.wurdum.com//js/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5('pavel.ritikov@gmail.com') + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+	
+</div>
+
+<nav id="main-nav"><ul class="main">
+    <li><a href="http://www.wurdum.com/">Blog</a></li>
+    <li><a href="http://www.wurdum.com/about/">About</a></li>
+    <li><a href="http://www.wurdum.com/post/">Archives</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+			<a class="facebook" href='http://www.facebook.com/pavel.rytikov' title="Facebook">Facebook</a>
+		
+		
+		
+			<a class="twitter" href='http://twitter.com/thewurdum' title="Twitter">Twitter</a>
+		
+		
+			<a class="github" href='https://github.com/wurdum' title="GitHub">GitHub</a>
+		
+		
+		
+		
+			<a class="linkedin" href='http://www.linkedin.com/in/pavelrytikov' title="LinkedIn">LinkedIn</a>
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href='http://www.wurdum.com/index.xml' title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>
+			</div>
+		</div>
+		<div class="mid-col">
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner">
+					<div itemscope itemtype="http://schema.org/Blog">
+					<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <h1 class="title" itemprop="name">Yield or not to yield</h1>
+	<div class="entry-content" itemprop="articleBody"><p>.Net community have frozen in anticipation of C# 7.0 and new features that it brings. Each version of the language that will turn 15 years old next year brought something new and useful for developers. Though each feature worth separate mention, today I want to tell you about keyword <em>yield</em>. I noticed, that beginners (not only) avoid using it. In this article I&rsquo;ll try to show its pros and cons, and provide cases when <em>yield</em> usage makes sense.</p>
+
+<p><em>yield</em> creates iterator and lets us do not write separate <code>Enumerator</code> class when we implement <code>IEnumerable</code>. C# has two expressions that contains <em>yield</em>: <code>yield return &lt;expression&gt;</code> и <em>yield break</em>. <em>yield</em> can be used in methods, operators or get accessors but I&rsquo;ll mostly talk about methods as <em>yield</em> works the same way everywhere.</p>
+
+<p>Writing <em>yield return</em> we indicate that current method returns <code>IEnumerable</code>, which elements are results of <em>yield return</em> expressions. After <em>yield</em> method stops its execution it returns control to caller. <em>yield</em> continues execution after next element of sequence is requested. Method variables retains their values between <em>yield return</em> expressions. <em>yield break</em> does well-known role of <em>break</em> which we use in loops. Example below returns numbers sequence from 0 to 10:</p>
+
+<pre><code>private static IEnumerable&lt;int&gt; GetNumbers() {
+    var number = 0;
+    while (true) {
+        if (number &gt; 10)
+            yield break;
+
+        yield return number++;
+    }
+}
+</code></pre>
+
+<p>It&rsquo;s important to notice that <em>yield</em> has several constraints. Iterator&rsquo;s <code>Reset</code> method throws <code>NotSupportedException</code>. We can&rsquo;t use <em>yield</em> in anonymous methods and methods that have <code>unsafe</code> code. Also, <em>yield return</em> can&rsquo;t be placed inside try-catch, but can be used in <code>try</code> section of <code>try-finally</code>. <em>yield break</em> can be placed in section <code>try</code> of both <code>try-catch</code> and <code>try-finally</code>. I recommend to read about reasons of such behavior <a href="https://blogs.msdn.microsoft.com/ericlippert/2009/07/16/iterator-blocks-part-three-why-no-yield-in-finally/">here</a> and <a href="https://blogs.msdn.microsoft.com/ericlippert/2009/07/20/iterator-blocks-part-four-why-no-yield-in-catch/">here</a>.</p>
+
+<p>Let’s see what <em>yield</em> compiles into. Each method with <em>yield return</em> is represented by a state machine which goes from one state to another during iterator execution. Below is listed simple application which prints infinite sequence of odd numbers:</p>
+
+<pre><code>internal class Program
+{
+    private static void Main1() {
+        foreach (var number in GetOddNumbers(10))
+            Console.WriteLine(number);
+    }
+
+    private static IEnumerable&lt;int&gt; GetOddNumbers(int staringWith) {
+        var previous = staringWith;
+        while (true)
+            if (++previous%2 != 0)
+                yield return previous;
+    }
+}
+</code></pre>
+
+<p>Compiler generates next code:</p>
+
+<pre><code>internal class Program
+{
+    private static void Main() {
+        IEnumerator&lt;int&gt; enumerator = null;
+        try {
+            enumerator = GetOddNumbers().GetEnumerator();
+            while (enumerator.MoveNext())
+                Console.WriteLine(enumerator.Current);
+        } finally {
+            if (enumerator != null)
+                enumerator.Dispose();
+        }
+    }
+
+    [IteratorStateMachine(typeof(CompilerGeneratedYield))]
+    private static IEnumerable&lt;int&gt; GetOddNumbers() {
+        return new CompilerGeneratedYield(-2);
+    }
+
+    [CompilerGenerated]
+    private sealed class CompilerGeneratedYield : IEnumerable&lt;int&gt;, IEnumerable, IEnumerator&lt;int&gt;, IDisposable, IEnumerator
+    {
+        private readonly int _initialThreadId;
+        private int _current;
+        private int _previous;
+        private int _state;
+
+        [DebuggerHidden]
+        public CompilerGeneratedYield(int state) {
+            _state = state;
+            _initialThreadId = Environment.CurrentManagedThreadId;
+        }
+
+        [DebuggerHidden]
+        IEnumerator&lt;int&gt; IEnumerable&lt;int&gt;.GetEnumerator() {
+            CompilerGeneratedYield getOddNumbers;
+            if ((_state == -2) &amp;&amp; (_initialThreadId == Environment.CurrentManagedThreadId)) {
+                _state = 0;
+                getOddNumbers = this;
+            } else {
+                getOddNumbers = new CompilerGeneratedYield(0);
+            }
+
+            return getOddNumbers;
+        }
+
+        [DebuggerHidden]
+        IEnumerator IEnumerable.GetEnumerator() {
+            return ((IEnumerable&lt;int&gt;)this).GetEnumerator();
+        }
+
+        int IEnumerator&lt;int&gt;.Current {
+            [DebuggerHidden] get { return _current; }
+        }
+
+        object IEnumerator.Current {
+            [DebuggerHidden] get { return _current; }
+        }
+
+        [DebuggerHidden]
+        void IDisposable.Dispose() { }
+
+        bool IEnumerator.MoveNext() {
+            switch (_state) {
+                case 0:
+                    _state = -1;
+                    _previous = 0;
+                    break;
+                case 1:
+                    _state = -1;
+                    break;
+                default:
+                    return false;
+            }
+
+            int num;
+            do {
+                num = _previous + 1;
+                _previous = num;
+            } while (num%2 == 0);
+
+            _current = _previous;
+            _state = 1;
+
+            return true;
+        }
+
+        [DebuggerHidden]
+        void IEnumerator.Reset() {
+            throw new NotSupportedException();
+        }
+    }
+}
+</code></pre>
+
+<p>From example you can find, that <em>yield</em> method body was replaced with class which implements <code>IEnumerable</code> and <code>IEnumerator</code>. It has <em>yield</em> method local variables as fields. Method&rsquo;s logic was transformed into a state machine and moved to <code>MoveNext</code>. Depending on initial <em>yield</em> logic class can have <code>Dispose</code> method implementation.</p>
+
+<p>Let’s go further and do 2 tests to measure <em>yield</em> performance and memory consumption. Just to note - these tests are synthetic and listed here only to show <em>yield</em> in comparison with straight implementation. I&rsquo;m using <a href="https://github.com/PerfDotNet/BenchmarkDotNet">BenchmarkDotNet</a> with <code>BenchmarkDotNet.Diagnostics.Windows</code> diagnostic module. First test compares implementations of method that returns sequence of integers (like <code>Enumerable.Range(start, count)</code>). First implementation is without iterator, second with:</p>
+
+<pre><code>public int[] Array(int start, int count) {
+    var numbers = new int[this.count];
+    for (var i = start; i &lt; this.count; i++)
+        numbers[i] = this.start + i;
+
+    return numbers;
+}
+
+public int[] Iterator(int start, int count) {
+    return IteratorInternal(start, count).ToArray();
+}
+
+private IEnumerable&lt;int&gt; IteratorInternal(int start, int count) {
+    for (var i = start; i &lt; count; ++i)
+        yield return start + i;
+}
+
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Count</th>
+<th>Start</th>
+<th>Median</th>
+<th>StdDev</th>
+<th>Gen 0</th>
+<th>Gen 1</th>
+<th>Gen 2</th>
+<th>Bytes Allocated/Op</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Array</td>
+<td>100</td>
+<td>10</td>
+<td>91.19 ns</td>
+<td>1.25 ns</td>
+<td>385.01</td>
+<td>-</td>
+<td>-</td>
+<td>169.18</td>
+</tr>
+
+<tr>
+<td>Iterator</td>
+<td>100</td>
+<td>10</td>
+<td>1,173.26 ns</td>
+<td>10.94 ns</td>
+<td>1,593.00</td>
+<td>-</td>
+<td>-</td>
+<td>700.37</td>
+</tr>
+</tbody>
+</table>
+
+<p>As you can see from results, Array implementation is almost 10 times faster and consumes almost 4 times less memory. Iterator class and separate <code>ToArray</code> call do their job.</p>
+
+<p>Second test is more complex. It emulates data stream processing. It sequentially selects records with even key and then records with key multiplied by 3. Similar to previous test, first implementation is without iterator, second with:</p>
+
+<pre><code>public List&lt;Tuple&lt;int, string&gt;&gt; List(int start, int count) {
+    var odds = new List&lt;Tuple&lt;int, string&gt;&gt;();
+    foreach (var record in OddsArray(ReadFromDb(start, count)))
+        if (record.Item1%3 == 0)
+            odds.Add(record);
+
+    return odds;
+}
+
+public List&lt;Tuple&lt;int, string&gt;&gt; Iterator(int start, int count) {
+    return IteratorInternal(start, count).ToList();
+}
+
+private IEnumerable&lt;Tuple&lt;int, string&gt;&gt; IteratorInternal(int start, int count) {
+    foreach (var record in OddsIterator(ReadFromDb(start, count)))
+        if (record.Item1%3 == 0)
+            yield return record;
+}
+
+private IEnumerable&lt;Tuple&lt;int, string&gt;&gt; OddsIterator(IEnumerable&lt;Tuple&lt;int, string&gt;&gt; records) {
+    foreach (var record in records)
+        if (record.Item1%2 != 0)
+            yield return record;
+}
+
+private List&lt;Tuple&lt;int, string&gt;&gt; OddsArray(IEnumerable&lt;Tuple&lt;int, string&gt;&gt; records) {
+    var odds = new List&lt;Tuple&lt;int, string&gt;&gt;();
+    foreach (var record in records)
+        if (record.Item1%2 != 0)
+            odds.Add(record);
+
+    return odds;
+}
+
+private IEnumerable&lt;Tuple&lt;int, string&gt;&gt; ReadFromDb(int start, int count) {
+    for (var i = start; i &lt; count; ++i)
+        yield return new KeyValuePair&lt;int, string&gt;(start + i, RandomString());
+}
+
+private static string RandomString() {
+    return Guid.NewGuid().ToString(&quot;n&quot;);
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Count</th>
+<th>Start</th>
+<th>Median</th>
+<th>StdDev</th>
+<th>Gen 0</th>
+<th>Gen 1</th>
+<th>Gen 2</th>
+<th>Bytes Allocated/Op</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>List</td>
+<td>100</td>
+<td>10</td>
+<td>43.14 us</td>
+<td>0.14 us</td>
+<td>279.04</td>
+<td>-</td>
+<td>-</td>
+<td>4,444.14</td>
+</tr>
+
+<tr>
+<td>Iterator</td>
+<td>100</td>
+<td>10</td>
+<td>43.22 us</td>
+<td>0.76 us</td>
+<td>231.00</td>
+<td>-</td>
+<td>-</td>
+<td>3,760.96</td>
+</tr>
+</tbody>
+</table>
+
+<p>In this test, implementations performance is the same, but <em>yield</em> memory consumption is lower. It&rsquo;s due to the fact that collection is computed only once and we saved memory on allocation only one <code>List&lt;Tuple&lt;int, string&gt;&gt;</code>.</p>
+
+<p>Considering all the above, I can do a short conclusion. Main disadvantage of <em>yield</em> is creation of   additional iterator class. When sequence is finite and caller doesn&rsquo;t have complex logic <em>yield</em> is slower and allocates more memory. Usage of <em>yield</em> makes sense in cases of data processing when each collection computation causes large memory block allocation. Lazy nature of <em>yield</em> can help to avoid computation of elements that will be filtered. In such cases <em>yield</em> significantly reduces memory consumption and CPU load.</p>
+</div></article>
+					
+						<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	
+	</div>
+	
+  	<script type="text/javascript" src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-566d4c1bd2d4f5f6'></script>
+  	
+</div>
+
+					
+					
+					<section id="comment">
+					    <h1 class="title">Comments</h1>
+					    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+					</section>
+					
+					
+
+<script type="text/javascript">
+    
+    var disqus_shortname = 'docode';
+
+    
+    
+
+    
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    
+</script>
+
+
+				    </div>
+				</div>
+			</div>
+			<footer id="footer" class="inner">Copyright &copy; 2016
+
+    Pavel Rytikov
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>
+<script src="http://www.wurdum.com//js/slash.js"></script>
+<script src="http://www.wurdum.com//js/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script></footer>
+		</div>
+	</div>
+	
+</body>
+</html>

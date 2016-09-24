@@ -7,7 +7,308 @@
     <language>en-us</language>
     <author>Pavel Rytikov</author>
     
-    <updated>Tue, 23 Feb 2016 23:25:06 EET</updated>
+    <updated>Sat, 24 Sep 2016 20:49:02 &#43;0200</updated>
+    
+    <item>
+      <title>Yield or not to yield</title>
+      <link>http://www.wurdum.com/post/yield-or-not-to-yield/</link>
+      <pubDate>Sat, 24 Sep 2016 20:49:02 &#43;0200</pubDate>
+      <author>Pavel Rytikov</author>
+      <guid>http://www.wurdum.com/post/yield-or-not-to-yield/</guid>
+      <description>&lt;p&gt;.Net community have frozen in anticipation of C# 7.0 and new features that it brings. Each version of the language that will turn 15 years old next year brought something new and useful for developers. Though each feature worth separate mention, today I want to tell you about keyword &lt;em&gt;yield&lt;/em&gt;. I noticed, that beginners (not only) avoid using it. In this article I&amp;rsquo;ll try to show its pros and cons, and provide cases when &lt;em&gt;yield&lt;/em&gt; usage makes sense.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;yield&lt;/em&gt; creates iterator and lets us do not write separate &lt;code&gt;Enumerator&lt;/code&gt; class when we implement &lt;code&gt;IEnumerable&lt;/code&gt;. C# has two expressions that contains &lt;em&gt;yield&lt;/em&gt;: &lt;code&gt;yield return &amp;lt;expression&amp;gt;&lt;/code&gt; и &lt;em&gt;yield break&lt;/em&gt;. &lt;em&gt;yield&lt;/em&gt; can be used in methods, operators or get accessors but I&amp;rsquo;ll mostly talk about methods as &lt;em&gt;yield&lt;/em&gt; works the same way everywhere.&lt;/p&gt;
+
+&lt;p&gt;Writing &lt;em&gt;yield return&lt;/em&gt; we indicate that current method returns &lt;code&gt;IEnumerable&lt;/code&gt;, which elements are results of &lt;em&gt;yield return&lt;/em&gt; expressions. After &lt;em&gt;yield&lt;/em&gt; method stops its execution it returns control to caller. &lt;em&gt;yield&lt;/em&gt; continues execution after next element of sequence is requested. Method variables retains their values between &lt;em&gt;yield return&lt;/em&gt; expressions. &lt;em&gt;yield break&lt;/em&gt; does well-known role of &lt;em&gt;break&lt;/em&gt; which we use in loops. Example below returns numbers sequence from 0 to 10:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;private static IEnumerable&amp;lt;int&amp;gt; GetNumbers() {
+    var number = 0;
+    while (true) {
+        if (number &amp;gt; 10)
+            yield break;
+
+        yield return number++;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It&amp;rsquo;s important to notice that &lt;em&gt;yield&lt;/em&gt; has several constraints. Iterator&amp;rsquo;s &lt;code&gt;Reset&lt;/code&gt; method throws &lt;code&gt;NotSupportedException&lt;/code&gt;. We can&amp;rsquo;t use &lt;em&gt;yield&lt;/em&gt; in anonymous methods and methods that have &lt;code&gt;unsafe&lt;/code&gt; code. Also, &lt;em&gt;yield return&lt;/em&gt; can&amp;rsquo;t be placed inside try-catch, but can be used in &lt;code&gt;try&lt;/code&gt; section of &lt;code&gt;try-finally&lt;/code&gt;. &lt;em&gt;yield break&lt;/em&gt; can be placed in section &lt;code&gt;try&lt;/code&gt; of both &lt;code&gt;try-catch&lt;/code&gt; and &lt;code&gt;try-finally&lt;/code&gt;. I recommend to read about reasons of such behavior &lt;a href=&#34;https://blogs.msdn.microsoft.com/ericlippert/2009/07/16/iterator-blocks-part-three-why-no-yield-in-finally/&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://blogs.msdn.microsoft.com/ericlippert/2009/07/20/iterator-blocks-part-four-why-no-yield-in-catch/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let’s see what &lt;em&gt;yield&lt;/em&gt; compiles into. Each method with &lt;em&gt;yield return&lt;/em&gt; is represented by a state machine which goes from one state to another during iterator execution. Below is listed simple application which prints infinite sequence of odd numbers:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;internal class Program
+{
+    private static void Main1() {
+        foreach (var number in GetOddNumbers(10))
+            Console.WriteLine(number);
+    }
+
+    private static IEnumerable&amp;lt;int&amp;gt; GetOddNumbers(int staringWith) {
+        var previous = staringWith;
+        while (true)
+            if (++previous%2 != 0)
+                yield return previous;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Compiler generates next code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;internal class Program
+{
+    private static void Main() {
+        IEnumerator&amp;lt;int&amp;gt; enumerator = null;
+        try {
+            enumerator = GetOddNumbers().GetEnumerator();
+            while (enumerator.MoveNext())
+                Console.WriteLine(enumerator.Current);
+        } finally {
+            if (enumerator != null)
+                enumerator.Dispose();
+        }
+    }
+
+    [IteratorStateMachine(typeof(CompilerGeneratedYield))]
+    private static IEnumerable&amp;lt;int&amp;gt; GetOddNumbers() {
+        return new CompilerGeneratedYield(-2);
+    }
+
+    [CompilerGenerated]
+    private sealed class CompilerGeneratedYield : IEnumerable&amp;lt;int&amp;gt;, IEnumerable, IEnumerator&amp;lt;int&amp;gt;, IDisposable, IEnumerator
+    {
+        private readonly int _initialThreadId;
+        private int _current;
+        private int _previous;
+        private int _state;
+
+        [DebuggerHidden]
+        public CompilerGeneratedYield(int state) {
+            _state = state;
+            _initialThreadId = Environment.CurrentManagedThreadId;
+        }
+
+        [DebuggerHidden]
+        IEnumerator&amp;lt;int&amp;gt; IEnumerable&amp;lt;int&amp;gt;.GetEnumerator() {
+            CompilerGeneratedYield getOddNumbers;
+            if ((_state == -2) &amp;amp;&amp;amp; (_initialThreadId == Environment.CurrentManagedThreadId)) {
+                _state = 0;
+                getOddNumbers = this;
+            } else {
+                getOddNumbers = new CompilerGeneratedYield(0);
+            }
+
+            return getOddNumbers;
+        }
+
+        [DebuggerHidden]
+        IEnumerator IEnumerable.GetEnumerator() {
+            return ((IEnumerable&amp;lt;int&amp;gt;)this).GetEnumerator();
+        }
+
+        int IEnumerator&amp;lt;int&amp;gt;.Current {
+            [DebuggerHidden] get { return _current; }
+        }
+
+        object IEnumerator.Current {
+            [DebuggerHidden] get { return _current; }
+        }
+
+        [DebuggerHidden]
+        void IDisposable.Dispose() { }
+
+        bool IEnumerator.MoveNext() {
+            switch (_state) {
+                case 0:
+                    _state = -1;
+                    _previous = 0;
+                    break;
+                case 1:
+                    _state = -1;
+                    break;
+                default:
+                    return false;
+            }
+
+            int num;
+            do {
+                num = _previous + 1;
+                _previous = num;
+            } while (num%2 == 0);
+
+            _current = _previous;
+            _state = 1;
+
+            return true;
+        }
+
+        [DebuggerHidden]
+        void IEnumerator.Reset() {
+            throw new NotSupportedException();
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;From example you can find, that &lt;em&gt;yield&lt;/em&gt; method body was replaced with class which implements &lt;code&gt;IEnumerable&lt;/code&gt; and &lt;code&gt;IEnumerator&lt;/code&gt;. It has &lt;em&gt;yield&lt;/em&gt; method local variables as fields. Method&amp;rsquo;s logic was transformed into a state machine and moved to &lt;code&gt;MoveNext&lt;/code&gt;. Depending on initial &lt;em&gt;yield&lt;/em&gt; logic class can have &lt;code&gt;Dispose&lt;/code&gt; method implementation.&lt;/p&gt;
+
+&lt;p&gt;Let’s go further and do 2 tests to measure &lt;em&gt;yield&lt;/em&gt; performance and memory consumption. Just to note - these tests are synthetic and listed here only to show &lt;em&gt;yield&lt;/em&gt; in comparison with straight implementation. I&amp;rsquo;m using &lt;a href=&#34;https://github.com/PerfDotNet/BenchmarkDotNet&#34;&gt;BenchmarkDotNet&lt;/a&gt; with &lt;code&gt;BenchmarkDotNet.Diagnostics.Windows&lt;/code&gt; diagnostic module. First test compares implementations of method that returns sequence of integers (like &lt;code&gt;Enumerable.Range(start, count)&lt;/code&gt;). First implementation is without iterator, second with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public int[] Array(int start, int count) {
+    var numbers = new int[this.count];
+    for (var i = start; i &amp;lt; this.count; i++)
+        numbers[i] = this.start + i;
+
+    return numbers;
+}
+
+public int[] Iterator(int start, int count) {
+    return IteratorInternal(start, count).ToArray();
+}
+
+private IEnumerable&amp;lt;int&amp;gt; IteratorInternal(int start, int count) {
+    for (var i = start; i &amp;lt; count; ++i)
+        yield return start + i;
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method&lt;/th&gt;
+&lt;th&gt;Count&lt;/th&gt;
+&lt;th&gt;Start&lt;/th&gt;
+&lt;th&gt;Median&lt;/th&gt;
+&lt;th&gt;StdDev&lt;/th&gt;
+&lt;th&gt;Gen 0&lt;/th&gt;
+&lt;th&gt;Gen 1&lt;/th&gt;
+&lt;th&gt;Gen 2&lt;/th&gt;
+&lt;th&gt;Bytes Allocated/Op&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Array&lt;/td&gt;
+&lt;td&gt;100&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;91.19 ns&lt;/td&gt;
+&lt;td&gt;1.25 ns&lt;/td&gt;
+&lt;td&gt;385.01&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;169.18&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Iterator&lt;/td&gt;
+&lt;td&gt;100&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;1,173.26 ns&lt;/td&gt;
+&lt;td&gt;10.94 ns&lt;/td&gt;
+&lt;td&gt;1,593.00&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;700.37&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;As you can see from results, Array implementation is almost 10 times faster and consumes almost 4 times less memory. Iterator class and separate &lt;code&gt;ToArray&lt;/code&gt; call do their job.&lt;/p&gt;
+
+&lt;p&gt;Second test is more complex. It emulates data stream processing. It sequentially selects records with even key and then records with key multiplied by 3. Similar to previous test, first implementation is without iterator, second with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public List&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt; List(int start, int count) {
+    var odds = new List&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt;();
+    foreach (var record in OddsArray(ReadFromDb(start, count)))
+        if (record.Item1%3 == 0)
+            odds.Add(record);
+
+    return odds;
+}
+
+public List&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt; Iterator(int start, int count) {
+    return IteratorInternal(start, count).ToList();
+}
+
+private IEnumerable&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt; IteratorInternal(int start, int count) {
+    foreach (var record in OddsIterator(ReadFromDb(start, count)))
+        if (record.Item1%3 == 0)
+            yield return record;
+}
+
+private IEnumerable&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt; OddsIterator(IEnumerable&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt; records) {
+    foreach (var record in records)
+        if (record.Item1%2 != 0)
+            yield return record;
+}
+
+private List&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt; OddsArray(IEnumerable&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt; records) {
+    var odds = new List&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt;();
+    foreach (var record in records)
+        if (record.Item1%2 != 0)
+            odds.Add(record);
+
+    return odds;
+}
+
+private IEnumerable&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt; ReadFromDb(int start, int count) {
+    for (var i = start; i &amp;lt; count; ++i)
+        yield return new KeyValuePair&amp;lt;int, string&amp;gt;(start + i, RandomString());
+}
+
+private static string RandomString() {
+    return Guid.NewGuid().ToString(&amp;quot;n&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method&lt;/th&gt;
+&lt;th&gt;Count&lt;/th&gt;
+&lt;th&gt;Start&lt;/th&gt;
+&lt;th&gt;Median&lt;/th&gt;
+&lt;th&gt;StdDev&lt;/th&gt;
+&lt;th&gt;Gen 0&lt;/th&gt;
+&lt;th&gt;Gen 1&lt;/th&gt;
+&lt;th&gt;Gen 2&lt;/th&gt;
+&lt;th&gt;Bytes Allocated/Op&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;List&lt;/td&gt;
+&lt;td&gt;100&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;43.14 us&lt;/td&gt;
+&lt;td&gt;0.14 us&lt;/td&gt;
+&lt;td&gt;279.04&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;4,444.14&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Iterator&lt;/td&gt;
+&lt;td&gt;100&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;43.22 us&lt;/td&gt;
+&lt;td&gt;0.76 us&lt;/td&gt;
+&lt;td&gt;231.00&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;3,760.96&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;In this test, implementations performance is the same, but &lt;em&gt;yield&lt;/em&gt; memory consumption is lower. It&amp;rsquo;s due to the fact that collection is computed only once and we saved memory on allocation only one &lt;code&gt;List&amp;lt;Tuple&amp;lt;int, string&amp;gt;&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Considering all the above, I can do a short conclusion. Main disadvantage of &lt;em&gt;yield&lt;/em&gt; is creation of   additional iterator class. When sequence is finite and caller doesn&amp;rsquo;t have complex logic &lt;em&gt;yield&lt;/em&gt; is slower and allocates more memory. Usage of &lt;em&gt;yield&lt;/em&gt; makes sense in cases of data processing when each collection computation causes large memory block allocation. Lazy nature of &lt;em&gt;yield&lt;/em&gt; can help to avoid computation of elements that will be filtered. In such cases &lt;em&gt;yield&lt;/em&gt; significantly reduces memory consumption and CPU load.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Restoring view model state</title>
@@ -97,7 +398,7 @@ public class AccountModelBinder : DefaultModelBinder
 
 &lt;p&gt;Any system that receives user input must validate it. ASP.NET MVC applications are not an exception, that is why framework creators implemented several approaches how it could be done. In this article I&amp;rsquo;m not going into implementation details. Here I want to analyse each of approaches and choose the one which most flexible. Also, I&amp;rsquo;m not going to touch on the client validation, because I&amp;rsquo;m sure that it have to be implemented independently from server side. Well, lets look at each of approaches:&lt;/p&gt;
 
-&lt;h2 id=&#34;controller-validation:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;Controller validation&lt;/h2&gt;
+&lt;h2 id=&#34;controller-validation&#34;&gt;Controller validation&lt;/h2&gt;
 
 &lt;p&gt;Placing validation into controller is the easiest and most direct approach.&lt;/p&gt;
 
@@ -126,7 +427,7 @@ public ActionResult CreateUser(User user) {
 
 &lt;p&gt;We verify model, add errors to ModelState and then just check ModelState.IsValid. This way has obvious advantage - simplicity. We don&amp;rsquo;t have to isolate logic, any dependencies accessible to controller are also accessible to validator. Logic is easy to find and easy to read. Disadvantages are not less-obvious. Necessity to validate the same model in multiple controllers brings to &lt;a href=&#34;https://en.wikipedia.org/wiki/Don%27t_repeat_yourself&#34;&gt;DRY&lt;/a&gt; principle violation. Inability to isolate validation logic leads to troubles in testing. When system complexity arises, disadvantages outweigh the advantages. I could hardly imagine production system where usage of controller validation would be reasonable.&lt;/p&gt;
 
-&lt;h2 id=&#34;data-annotations-attributes:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;Data Annotations attributes&lt;/h2&gt;
+&lt;h2 id=&#34;data-annotations-attributes&#34;&gt;Data Annotations attributes&lt;/h2&gt;
 
 &lt;p&gt;Validation using ValidationAttribute is based on the idea that each model property has its own set of invariants which can be described by simple logic. Each attribute implements particular logic that checks invariant and can be applied to multiple properties across the application. It&amp;rsquo;s a neat solution which removes duplication and puts logic in one place.&lt;/p&gt;
 
@@ -166,7 +467,7 @@ public ActionResult CreateUser(User user) {
 
 &lt;p&gt;This approach is perfectly suitable when we talk about validation of a single property. But it can&amp;rsquo;t help you when model validation is based on  combination of properties. Also it is not obvious how to inject services/repositories into validation attribute.&lt;/p&gt;
 
-&lt;h2 id=&#34;ivalidatableobject-interface:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;IValidatableObject interface&lt;/h2&gt;
+&lt;h2 id=&#34;ivalidatableobject-interface&#34;&gt;IValidatableObject interface&lt;/h2&gt;
 
 &lt;p&gt;Complex validation can be done by implementing in model IValidatableObject interface. This interface contains only one method, that will be called during validation.&lt;/p&gt;
 
@@ -192,7 +493,7 @@ public ActionResult CreateUser(User user) {
 
 &lt;p&gt;Approach is similar to controller validation except the validation logic is isolated in model. At first glance it&amp;rsquo;s a good way. However, it also has a significant flaw. When we talk about models in context of ASP.NET MVC, we actually mean &lt;a href=&#34;https://en.wikipedia.org/wiki/Data_transfer_object&#34;&gt;DTO&lt;/a&gt;. And when we add validation to DTO, we violate single responsibility principle. It will remind itself when we need to inject dependencies into validation logic of bloated model.&lt;/p&gt;
 
-&lt;h2 id=&#34;custom-modelvalidatorprovider:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;Custom ModelValidatorProvider&lt;/h2&gt;
+&lt;h2 id=&#34;custom-modelvalidatorprovider&#34;&gt;Custom ModelValidatorProvider&lt;/h2&gt;
 
 &lt;p&gt;In order to fix previous problem we have to create separate class whose responsibility would be validation. Such approach can be implemented using ModelValidatorProvider. It is a factory that creates validators using model type. ASP.NET MVC allows to create custom factory that returns our custom validators.&lt;/p&gt;
 
@@ -245,7 +546,7 @@ ModelValidatorProviders.Providers.Add(new ProjectModelValidatorProvider());
 
 &lt;p&gt;Custom ModelsValidatorProvider has no mentioned flaws. Validation logic is isolated in separate classes which are easy to test. Since we&amp;rsquo;re implementing custom provider, we can set up validators resolving through IOC container that already exists in project. It will solve any troubles with third party dependencies access.&lt;/p&gt;
 
-&lt;h2 id=&#34;fluentvalidation:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;FluentValidation&lt;/h2&gt;
+&lt;h2 id=&#34;fluentvalidation&#34;&gt;FluentValidation&lt;/h2&gt;
 
 &lt;p&gt;Each time you decide to write code to solve well known problem do a simple search and try to find a good solution that already exists. There is no wonder that library which provides the right solution to this problem is already written. Its name is a &lt;a href=&#34;https://github.com/JeremySkinner/FluentValidation&#34;&gt;FluentValidation&lt;/a&gt;.&lt;/p&gt;
 

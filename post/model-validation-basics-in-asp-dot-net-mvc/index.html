@@ -115,7 +115,7 @@
 
 <p>Any system that receives user input must validate it. ASP.NET MVC applications are not an exception, that is why framework creators implemented several approaches how it could be done. In this article I&rsquo;m not going into implementation details. Here I want to analyse each of approaches and choose the one which most flexible. Also, I&rsquo;m not going to touch on the client validation, because I&rsquo;m sure that it have to be implemented independently from server side. Well, lets look at each of approaches:</p>
 
-<h2 id="controller-validation:578ada23f832f33a53fdb7cb3abffc7f">Controller validation</h2>
+<h2 id="controller-validation">Controller validation</h2>
 
 <p>Placing validation into controller is the easiest and most direct approach.</p>
 
@@ -144,7 +144,7 @@ public ActionResult CreateUser(User user) {
 
 <p>We verify model, add errors to ModelState and then just check ModelState.IsValid. This way has obvious advantage - simplicity. We don&rsquo;t have to isolate logic, any dependencies accessible to controller are also accessible to validator. Logic is easy to find and easy to read. Disadvantages are not less-obvious. Necessity to validate the same model in multiple controllers brings to <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> principle violation. Inability to isolate validation logic leads to troubles in testing. When system complexity arises, disadvantages outweigh the advantages. I could hardly imagine production system where usage of controller validation would be reasonable.</p>
 
-<h2 id="data-annotations-attributes:578ada23f832f33a53fdb7cb3abffc7f">Data Annotations attributes</h2>
+<h2 id="data-annotations-attributes">Data Annotations attributes</h2>
 
 <p>Validation using ValidationAttribute is based on the idea that each model property has its own set of invariants which can be described by simple logic. Each attribute implements particular logic that checks invariant and can be applied to multiple properties across the application. It&rsquo;s a neat solution which removes duplication and puts logic in one place.</p>
 
@@ -184,7 +184,7 @@ public ActionResult CreateUser(User user) {
 
 <p>This approach is perfectly suitable when we talk about validation of a single property. But it can&rsquo;t help you when model validation is based on  combination of properties. Also it is not obvious how to inject services/repositories into validation attribute.</p>
 
-<h2 id="ivalidatableobject-interface:578ada23f832f33a53fdb7cb3abffc7f">IValidatableObject interface</h2>
+<h2 id="ivalidatableobject-interface">IValidatableObject interface</h2>
 
 <p>Complex validation can be done by implementing in model IValidatableObject interface. This interface contains only one method, that will be called during validation.</p>
 
@@ -210,7 +210,7 @@ public ActionResult CreateUser(User user) {
 
 <p>Approach is similar to controller validation except the validation logic is isolated in model. At first glance it&rsquo;s a good way. However, it also has a significant flaw. When we talk about models in context of ASP.NET MVC, we actually mean <a href="https://en.wikipedia.org/wiki/Data_transfer_object">DTO</a>. And when we add validation to DTO, we violate single responsibility principle. It will remind itself when we need to inject dependencies into validation logic of bloated model.</p>
 
-<h2 id="custom-modelvalidatorprovider:578ada23f832f33a53fdb7cb3abffc7f">Custom ModelValidatorProvider</h2>
+<h2 id="custom-modelvalidatorprovider">Custom ModelValidatorProvider</h2>
 
 <p>In order to fix previous problem we have to create separate class whose responsibility would be validation. Such approach can be implemented using ModelValidatorProvider. It is a factory that creates validators using model type. ASP.NET MVC allows to create custom factory that returns our custom validators.</p>
 
@@ -263,7 +263,7 @@ ModelValidatorProviders.Providers.Add(new ProjectModelValidatorProvider());
 
 <p>Custom ModelsValidatorProvider has no mentioned flaws. Validation logic is isolated in separate classes which are easy to test. Since we&rsquo;re implementing custom provider, we can set up validators resolving through IOC container that already exists in project. It will solve any troubles with third party dependencies access.</p>
 
-<h2 id="fluentvalidation:578ada23f832f33a53fdb7cb3abffc7f">FluentValidation</h2>
+<h2 id="fluentvalidation">FluentValidation</h2>
 
 <p>Each time you decide to write code to solve well known problem do a simple search and try to find a good solution that already exists. There is no wonder that library which provides the right solution to this problem is already written. Its name is a <a href="https://github.com/JeremySkinner/FluentValidation">FluentValidation</a>.</p>
 

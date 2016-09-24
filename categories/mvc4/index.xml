@@ -97,7 +97,7 @@ public class AccountModelBinder : DefaultModelBinder
 
 &lt;p&gt;Any system that receives user input must validate it. ASP.NET MVC applications are not an exception, that is why framework creators implemented several approaches how it could be done. In this article I&amp;rsquo;m not going into implementation details. Here I want to analyse each of approaches and choose the one which most flexible. Also, I&amp;rsquo;m not going to touch on the client validation, because I&amp;rsquo;m sure that it have to be implemented independently from server side. Well, lets look at each of approaches:&lt;/p&gt;
 
-&lt;h2 id=&#34;controller-validation:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;Controller validation&lt;/h2&gt;
+&lt;h2 id=&#34;controller-validation&#34;&gt;Controller validation&lt;/h2&gt;
 
 &lt;p&gt;Placing validation into controller is the easiest and most direct approach.&lt;/p&gt;
 
@@ -126,7 +126,7 @@ public ActionResult CreateUser(User user) {
 
 &lt;p&gt;We verify model, add errors to ModelState and then just check ModelState.IsValid. This way has obvious advantage - simplicity. We don&amp;rsquo;t have to isolate logic, any dependencies accessible to controller are also accessible to validator. Logic is easy to find and easy to read. Disadvantages are not less-obvious. Necessity to validate the same model in multiple controllers brings to &lt;a href=&#34;https://en.wikipedia.org/wiki/Don%27t_repeat_yourself&#34;&gt;DRY&lt;/a&gt; principle violation. Inability to isolate validation logic leads to troubles in testing. When system complexity arises, disadvantages outweigh the advantages. I could hardly imagine production system where usage of controller validation would be reasonable.&lt;/p&gt;
 
-&lt;h2 id=&#34;data-annotations-attributes:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;Data Annotations attributes&lt;/h2&gt;
+&lt;h2 id=&#34;data-annotations-attributes&#34;&gt;Data Annotations attributes&lt;/h2&gt;
 
 &lt;p&gt;Validation using ValidationAttribute is based on the idea that each model property has its own set of invariants which can be described by simple logic. Each attribute implements particular logic that checks invariant and can be applied to multiple properties across the application. It&amp;rsquo;s a neat solution which removes duplication and puts logic in one place.&lt;/p&gt;
 
@@ -166,7 +166,7 @@ public ActionResult CreateUser(User user) {
 
 &lt;p&gt;This approach is perfectly suitable when we talk about validation of a single property. But it can&amp;rsquo;t help you when model validation is based on  combination of properties. Also it is not obvious how to inject services/repositories into validation attribute.&lt;/p&gt;
 
-&lt;h2 id=&#34;ivalidatableobject-interface:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;IValidatableObject interface&lt;/h2&gt;
+&lt;h2 id=&#34;ivalidatableobject-interface&#34;&gt;IValidatableObject interface&lt;/h2&gt;
 
 &lt;p&gt;Complex validation can be done by implementing in model IValidatableObject interface. This interface contains only one method, that will be called during validation.&lt;/p&gt;
 
@@ -192,7 +192,7 @@ public ActionResult CreateUser(User user) {
 
 &lt;p&gt;Approach is similar to controller validation except the validation logic is isolated in model. At first glance it&amp;rsquo;s a good way. However, it also has a significant flaw. When we talk about models in context of ASP.NET MVC, we actually mean &lt;a href=&#34;https://en.wikipedia.org/wiki/Data_transfer_object&#34;&gt;DTO&lt;/a&gt;. And when we add validation to DTO, we violate single responsibility principle. It will remind itself when we need to inject dependencies into validation logic of bloated model.&lt;/p&gt;
 
-&lt;h2 id=&#34;custom-modelvalidatorprovider:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;Custom ModelValidatorProvider&lt;/h2&gt;
+&lt;h2 id=&#34;custom-modelvalidatorprovider&#34;&gt;Custom ModelValidatorProvider&lt;/h2&gt;
 
 &lt;p&gt;In order to fix previous problem we have to create separate class whose responsibility would be validation. Such approach can be implemented using ModelValidatorProvider. It is a factory that creates validators using model type. ASP.NET MVC allows to create custom factory that returns our custom validators.&lt;/p&gt;
 
@@ -245,7 +245,7 @@ ModelValidatorProviders.Providers.Add(new ProjectModelValidatorProvider());
 
 &lt;p&gt;Custom ModelsValidatorProvider has no mentioned flaws. Validation logic is isolated in separate classes which are easy to test. Since we&amp;rsquo;re implementing custom provider, we can set up validators resolving through IOC container that already exists in project. It will solve any troubles with third party dependencies access.&lt;/p&gt;
 
-&lt;h2 id=&#34;fluentvalidation:578ada23f832f33a53fdb7cb3abffc7f&#34;&gt;FluentValidation&lt;/h2&gt;
+&lt;h2 id=&#34;fluentvalidation&#34;&gt;FluentValidation&lt;/h2&gt;
 
 &lt;p&gt;Each time you decide to write code to solve well known problem do a simple search and try to find a good solution that already exists. There is no wonder that library which provides the right solution to this problem is already written. Its name is a &lt;a href=&#34;https://github.com/JeremySkinner/FluentValidation&#34;&gt;FluentValidation&lt;/a&gt;.&lt;/p&gt;
 

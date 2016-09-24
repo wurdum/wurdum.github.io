@@ -3,6 +3,7 @@
 <html lang="en-us">
 
 <head>
+	<meta name="generator" content="Hugo 0.16" />
 	<meta charset="utf-8">
 	<title>Do Code</title>
 	<meta name="author" content="map[name:Pavel Rytikov email:pavel.ritikov@gmail.com]">
@@ -113,6 +114,48 @@
 					
 				        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     <div class="meta">
+		<div class="date"><time datetime='2016-09-24 20:49:02 &#43;0200 &#43;0200' data-updated="true" itemprop="datePublished">2016-09-24</time>
+</div>
+		<div class="tags">
+
+
+	
+	
+	    <a href="http://www.wurdum.com//categories/c"> c# </a>
+	
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="http://www.wurdum.com/post/yield-or-not-to-yield/" itemprop="url">Yield or not to yield</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>.Net community have frozen in anticipation of C# 7.0 and new features that it brings. Each version of the language that will turn 15 years old next year brought something new and useful for developers. Though each feature worth separate mention, today I want to tell you about keyword <em>yield</em>. I noticed, that beginners (not only) avoid using it. In this article I&rsquo;ll try to show its pros and cons, and provide cases when <em>yield</em> usage makes sense.</p>
+
+<p><em>yield</em> creates iterator and lets us do not write separate <code>Enumerator</code> class when we implement <code>IEnumerable</code>. C# has two expressions that contains <em>yield</em>: <code>yield return &lt;expression&gt;</code> и <em>yield break</em>. <em>yield</em> can be used in methods, operators or get accessors but I&rsquo;ll mostly talk about methods as <em>yield</em> works the same way everywhere.</p>
+
+<p>Writing <em>yield return</em> we indicate that current method returns <code>IEnumerable</code>, which elements are results of <em>yield return</em> expressions. After <em>yield</em> method stops its execution it returns control to caller. <em>yield</em> continues execution after next element of sequence is requested. Method variables retains their values between <em>yield return</em> expressions. <em>yield break</em> does well-known role of <em>break</em> which we use in loops. Example below returns numbers sequence from 0 to 10:</p>
+
+<pre><code>private static IEnumerable&lt;int&gt; GetNumbers() {
+    var number = 0;
+    while (true) {
+        if (number &gt; 10)
+            yield break;
+
+        yield return number++;
+    }
+}
+</code></pre>
+
+<p>It&rsquo;s important to notice that <em>yield</em> has several constraints. Iterator&rsquo;s <code>Reset</code> method throws <code>NotSupportedException</code>. We can&rsquo;t use <em>yield</em> in anonymous methods and methods that have <code>unsafe</code> code. Also, <em>yield return</em> can&rsquo;t be placed inside try-catch, but can be used in <code>try</code> section of <code>try-finally</code>. <em>yield break</em> can be placed in section <code>try</code> of both <code>try-catch</code> and <code>try-finally</code>. I recommend to read about reasons of such behavior <a href="https://blogs.msdn.microsoft.com/ericlippert/2009/07/16/iterator-blocks-part-three-why-no-yield-in-finally/">here</a> and <a href="https://blogs.msdn.microsoft.com/ericlippert/2009/07/20/iterator-blocks-part-four-why-no-yield-in-catch/">here</a>.</p>
+
+		<a href="http://www.wurdum.com/post/yield-or-not-to-yield/" class="more-link">Read on →</a>
+	</div>
+</article>
+
+				    
+				        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="meta">
 		<div class="date"><time datetime='2016-02-23 23:25:06 &#43;0200 EET' data-updated="true" itemprop="datePublished">2016-02-23</time>
 </div>
 		<div class="tags">
@@ -178,7 +221,7 @@ public class Account
 	<div class="entry-content" itemprop="articleBody">
 		<p>Any system that receives user input must validate it. ASP.NET MVC applications are not an exception, that is why framework creators implemented several approaches how it could be done. In this article I&rsquo;m not going into implementation details. Here I want to analyse each of approaches and choose the one which most flexible. Also, I&rsquo;m not going to touch on the client validation, because I&rsquo;m sure that it have to be implemented independently from server side. Well, lets look at each of approaches:</p>
 
-<h2 id="controller-validation:578ada23f832f33a53fdb7cb3abffc7f">Controller validation</h2>
+<h2 id="controller-validation">Controller validation</h2>
 
 <p>Placing validation into controller is the easiest and most direct approach.</p>
 
