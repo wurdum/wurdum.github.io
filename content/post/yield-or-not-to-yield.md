@@ -29,13 +29,13 @@ Let’s see what *yield* compiles into. Each method with *yield return* is repre
 ```
 internal class Program
 {
-    private static void Main1() {
-        foreach (var number in GetOddNumbers(10))
+    private static void Main() {
+        foreach (var number in GetOddNumbers())
             Console.WriteLine(number);
     }
 
-    private static IEnumerable<int> GetOddNumbers(int staringWith) {
-        var previous = staringWith;
+    private static IEnumerable<int> GetOddNumbers() {
+        var previous = 0;
         while (true)
             if (++previous%2 != 0)
                 yield return previous;
@@ -148,9 +148,9 @@ Let’s go further and do 2 tests to measure *yield* performance and memory cons
 
 ```
 public int[] Array(int start, int count) {
-    var numbers = new int[this.count];
-    for (var i = start; i < this.count; i++)
-        numbers[i] = this.start + i;
+    var numbers = new int[count];
+    for (var i = 0; i < count; ++i)
+        numbers[i] = start + i;
 
     return numbers;
 }
@@ -160,10 +160,9 @@ public int[] Iterator(int start, int count) {
 }
 
 private IEnumerable<int> IteratorInternal(int start, int count) {
-    for (var i = start; i < count; ++i)
+    for (var i = 0; i < count; ++i)
         yield return start + i;
 }
-
 ```
 
    Method | Count | Start |      Median |   StdDev |    Gen 0 | Gen 1 | Gen 2 | Bytes Allocated/Op
