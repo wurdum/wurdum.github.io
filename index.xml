@@ -38,13 +38,13 @@
 
 &lt;pre&gt;&lt;code&gt;internal class Program
 {
-    private static void Main1() {
-        foreach (var number in GetOddNumbers(10))
+    private static void Main() {
+        foreach (var number in GetOddNumbers())
             Console.WriteLine(number);
     }
 
-    private static IEnumerable&amp;lt;int&amp;gt; GetOddNumbers(int staringWith) {
-        var previous = staringWith;
+    private static IEnumerable&amp;lt;int&amp;gt; GetOddNumbers() {
+        var previous = 0;
         while (true)
             if (++previous%2 != 0)
                 yield return previous;
@@ -155,9 +155,9 @@
 &lt;p&gt;Let’s go further and do 2 tests to measure &lt;em&gt;yield&lt;/em&gt; performance and memory consumption. Just to note - these tests are synthetic and listed here only to show &lt;em&gt;yield&lt;/em&gt; in comparison with straight implementation. I&amp;rsquo;m using &lt;a href=&#34;https://github.com/PerfDotNet/BenchmarkDotNet&#34;&gt;BenchmarkDotNet&lt;/a&gt; with &lt;code&gt;BenchmarkDotNet.Diagnostics.Windows&lt;/code&gt; diagnostic module. First test compares implementations of method that returns sequence of integers (like &lt;code&gt;Enumerable.Range(start, count)&lt;/code&gt;). First implementation is without iterator, second with:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;public int[] Array(int start, int count) {
-    var numbers = new int[this.count];
-    for (var i = start; i &amp;lt; this.count; i++)
-        numbers[i] = this.start + i;
+    var numbers = new int[count];
+    for (var i = 0; i &amp;lt; count; ++i)
+        numbers[i] = start + i;
 
     return numbers;
 }
@@ -167,10 +167,9 @@ public int[] Iterator(int start, int count) {
 }
 
 private IEnumerable&amp;lt;int&amp;gt; IteratorInternal(int start, int count) {
-    for (var i = start; i &amp;lt; count; ++i)
+    for (var i = 0; i &amp;lt; count; ++i)
         yield return start + i;
 }
-
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;table&gt;

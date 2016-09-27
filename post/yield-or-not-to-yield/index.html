@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Yield or not to yield - Do Code</title>
-	<meta name="author" content="map[name:Pavel Rytikov email:pavel.ritikov@gmail.com]">
+	<meta name="author" content="map[email:pavel.ritikov@gmail.com name:Pavel Rytikov]">
 
 	
 	
@@ -133,13 +133,13 @@
 
 <pre><code>internal class Program
 {
-    private static void Main1() {
-        foreach (var number in GetOddNumbers(10))
+    private static void Main() {
+        foreach (var number in GetOddNumbers())
             Console.WriteLine(number);
     }
 
-    private static IEnumerable&lt;int&gt; GetOddNumbers(int staringWith) {
-        var previous = staringWith;
+    private static IEnumerable&lt;int&gt; GetOddNumbers() {
+        var previous = 0;
         while (true)
             if (++previous%2 != 0)
                 yield return previous;
@@ -250,9 +250,9 @@
 <p>Let’s go further and do 2 tests to measure <em>yield</em> performance and memory consumption. Just to note - these tests are synthetic and listed here only to show <em>yield</em> in comparison with straight implementation. I&rsquo;m using <a href="https://github.com/PerfDotNet/BenchmarkDotNet">BenchmarkDotNet</a> with <code>BenchmarkDotNet.Diagnostics.Windows</code> diagnostic module. First test compares implementations of method that returns sequence of integers (like <code>Enumerable.Range(start, count)</code>). First implementation is without iterator, second with:</p>
 
 <pre><code>public int[] Array(int start, int count) {
-    var numbers = new int[this.count];
-    for (var i = start; i &lt; this.count; i++)
-        numbers[i] = this.start + i;
+    var numbers = new int[count];
+    for (var i = 0; i &lt; count; ++i)
+        numbers[i] = start + i;
 
     return numbers;
 }
@@ -262,10 +262,9 @@ public int[] Iterator(int start, int count) {
 }
 
 private IEnumerable&lt;int&gt; IteratorInternal(int start, int count) {
-    for (var i = start; i &lt; count; ++i)
+    for (var i = 0; i &lt; count; ++i)
         yield return start + i;
 }
-
 </code></pre>
 
 <table>
